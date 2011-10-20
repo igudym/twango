@@ -1,0 +1,8 @@
+env
+*migrations*
+*.pyc
+*.swp
+*.db
+*.DS_store
+*#*
+*~*
