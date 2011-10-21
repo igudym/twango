@@ -6,7 +6,9 @@ setup(
     scripts = ['twango/twango-admin.py'],
 	package_data = {
 	        # If any package contains *.txt or *.rst files, include them:
-			'twango/template/default/':['*'],
+	        '': ['*.sh','*.txt', '*.html','*.js','*.css','*.png','*.jpg','*.pdf'],
+			'twango/template/default/src/media':['*'],
+			'twango/template/default/src/templates':['*'],
 	    },
     author = "Daniel Gray",
     author_email = "dan@technigami.com",

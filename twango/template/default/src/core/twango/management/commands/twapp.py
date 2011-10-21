@@ -90,11 +90,20 @@ class Command(LabelCommand):
     can_import_settings = False
 
     def handle_label(self, app_name, directory=None, **options):
-	    # @todo: If the app name has . in it, use that to create the correct
-	    # package name.
-	
+        package = app_name.split('.')
+        app_name = package.pop()
+         
         if directory is None:
             directory = os.getcwd() + '/apps/'
+            
+            for pdir in package:
+                directory += pdir + '/'
+                if not os.path.exists(directory):
+                    os.mkdir(directory)
+                    init = open(directory+'__init__.py', 'w')
+                    init.close()
+                
+            print directory
 
         # Determine the project_name by using the basename of directory,
         # which should be the full path of the project directory (or the
@@ -124,5 +133,4 @@ class ProjectCommand(Command):
 
     def handle_label(self, app_name, **options):
         super(ProjectCommand, self).handle_label(app_name, self.project_directory, **options)
-
 
