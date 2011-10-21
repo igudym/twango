@@ -6,9 +6,8 @@ setup(
     scripts = ['twango/twango-admin.py'],
 	package_data = {
 	        # If any package contains *.txt or *.rst files, include them:
-			'twango/template/default/src/':['*'],
+			'twango/template/default/':['*'],
 	    },
-	exclude_package_data = { 'twango/template/default/src/':['*.pyc'] },
     author = "Daniel Gray",
     author_email = "dan@technigami.com",
     description = "A package to help automate creation of new django apps and projects",

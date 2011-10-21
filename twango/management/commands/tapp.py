@@ -35,7 +35,7 @@ def copy_helper(style, app_or_project, name, directory, other_name=''):
     # Determine where the app or project templates are. Use
     # django.__path__[0] because we don't know into which directory
     # django has been installed.
-    template_dir = os.path.join(os.path.abspath(os.path.dirname(__file__).'../'), 'conf', '%s_template' % app_or_project)
+    template_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)+'/../'), 'conf', '%s_template' % app_or_project)
     print template_dir
     for d, subdirs, files in os.walk(template_dir):
         relative_dir = d[len(template_dir)+1:].replace('%s_name' % app_or_project, name)
@@ -69,6 +69,7 @@ def _make_writeable(filename):
 
     """
     import stat
+    import sys
     if sys.platform.startswith('java'):
         # On Jython there is no os.access()
         return
@@ -89,8 +90,11 @@ class Command(LabelCommand):
     can_import_settings = False
 
     def handle_label(self, app_name, directory=None, **options):
+	    # @todo: If the app name has . in it, use that to create the correct
+	    # package name.
+	
         if directory is None:
-            directory = os.getcwd() + 'apps/'
+            directory = os.getcwd() + '/apps/'
 
         # Determine the project_name by using the basename of directory,
         # which should be the full path of the project directory (or the
@@ -120,4 +124,5 @@ class ProjectCommand(Command):
 
     def handle_label(self, app_name, **options):
         super(ProjectCommand, self).handle_label(app_name, self.project_directory, **options)
+
 
