@@ -2,7 +2,7 @@ import os
 
 from django.core.management.base import copy_helper, CommandError, LabelCommand
 from django.utils.importlib import import_module
-
+from django.conf import settings
 
 def copy_helper(style, app_or_project, name, directory, other_name=''):
     """
@@ -79,6 +79,19 @@ def _make_writeable(filename):
         os.chmod(filename, new_permissions)
 
 
+def update_configuration(package,app_name):
+    """
+    This takes in a template settings file, and generates a new settings file from that template
+    """
+    f = open(settings.PROJECT_DIR+"/urls.py","a")
+    f.write("urlpatterns = urlpatterns + patterns('',(url(r'^"+app_name+"/'"+",include('src.apps"+".".join(package)+"."+app_name+".urls'))),) \n")
+    f.close()
+    f = open(settings.PROJECT_DIR+"/settings/25-added_apps.py","a")
+    f.write("""
+INSTALLED_APPS += (
+    'apps"""+".".join(package)+"."+app_name+"""',
+    ) \n""")
+
 class Command(LabelCommand):
     help = "Creates a Django app directory structure for the given app name in the current directory."
     args = "[appname]"
@@ -122,6 +135,7 @@ class Command(LabelCommand):
             raise CommandError("%r conflicts with the name of an existing Python module and cannot be used as an app name. Please try another name." % app_name)
 
         copy_helper(self.style, 'app', app_name, directory, project_name)
+        update_configuration(package,app_name)
 
 class ProjectCommand(Command):
     help = ("Creates a Django app directory structure for the given app name"
