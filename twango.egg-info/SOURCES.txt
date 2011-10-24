@@ -12,7 +12,6 @@ twango/template/default/__init__.py
 twango/template/default/src/__init__.py
 twango/template/default/src/manage.py
 twango/template/default/src/settings.py
-twango/template/default/src/settings_local.py
 twango/template/default/src/urls.py
 twango/template/default/src/apps/__init__.py
 twango/template/default/src/core/__init__.py
@@ -31,6 +30,13 @@ twango/template/default/src/core/twango/management/conf/app_template/models.py
 twango/template/default/src/core/twango/management/conf/app_template/tests.py
 twango/template/default/src/core/twango/management/conf/app_template/urls.py
 twango/template/default/src/core/twango/management/conf/app_template/views.py
+twango/template/default/src/settings/10-base.conf.py
+twango/template/default/src/settings/15-database.conf.py
+twango/template/default/src/settings/20-standard_apps.conf.py
+twango/template/default/src/settings/25-added_apps.conf.py
+twango/template/default/src/settings/99-debug.conf.py
+twango/template/default/src/settings/__init__.py
+twango/template/default/src/templates/__init__.py
 twango/test/__init__.py
 twango/test/manage.py
 twango/test/settings.py
