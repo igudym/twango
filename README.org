@@ -14,6 +14,11 @@ It is recommended that you install twango globally ::
 
 This will give you a new project based on the default twango template.  The system is currently only designed for one template, but in the near future we won't provide more templates, but will provide a place for you to take an application skelaton you like and bake it into a twango project template 
 
+The twango default template provides you with a virtualenvironment.  To set it up and get everything working on your local machine
+go to the directory (myproject) and run the bootstrap script
+
+    : source bootstrap.sh
+
 There is now a management command "initapp" - this builds out a new initial app, while at the same time adding the correct values to the urls and app settings, so it will just work once you run that command
 
 

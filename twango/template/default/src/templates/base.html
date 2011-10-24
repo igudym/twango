@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
+<head>
+<title>{% block title %}{% endblock %}</title>
+<!-- keep them uncompressed for development, then add a caching compressor -->
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.reset.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.base.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.type.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.table.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.form.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.grid.css">
+
+<script type="text/javascript" src="/media/scripts/html5.js"></script>
+	<style>
+		#page					{ margin: 0 auto 36px auto; }
+		.layout-grid			{ background-image: url(/media/img/baseline+column.png); background-repeat: repeat; background-position: 0 1px; border-bottom: solid 1px #CEECF5; }
+		#branding a				{ border: none; }
+		.grid-example			{ background: rgba(187, 204, 221, 0.3); color: #069; }
+		.grid-example.unitx1, .grid-example.unitx2,
+		.grid-example.unitx3, .grid-example.unitx4,
+		.grid-example.unitx5, .grid-example.unitx6,
+		.grid-example.unitx7	{ margin-bottom: 18px; }
+		@media only screen and (max-device-width:480px) {
+			.layout-grid		{ background-image: url(/media/img/baseline.png); }
+			.grid-example		{ background: rgba(187, 204, 221, 0.6); }
+		}
+	</style>
+</head>
+
+<body class="page-grid">
+	<div id="page">
+		{% block body %}{% endblock%}
+	</div>
+</body>
+
+</html>
