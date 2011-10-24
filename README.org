@@ -1,4 +1,11 @@
 * Twango
+This is not to be confused with django-twango, which looks like its a twitter api.  We may consider renaming the project
+to avoid confusion.
+
+We picked the name "Twango" not because of any connection with twitter, but because we like the play on words.
+"Twango", a track on Duane Eddy's album Road Trip, is a tribute to Reinhardt. ( http://en.wikipedia.org/wiki/Django_Reinhardt )
+We also meant it as sort of tuned django:: twango.
+
 An open source set of extensions to make setting up new django projects go more smoothly
 while still retaining the flexability of the django framework.  It just provides a set of 
 templates that allow you to really dive in and get started on the main project rather than
