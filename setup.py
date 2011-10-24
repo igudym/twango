@@ -4,12 +4,7 @@ setup(
     name = "twango",
     packages = find_packages(),
     scripts = ['twango/twango-admin.py'],
-	package_data = {
-	        # If any package contains *.txt or *.rst files, include them:
-			'twango.template.default.src':['template/default/src/media/*'],
-			'twango.template.default.src':['template/default/src/settings/*'],
-			'twango.template.default.src':['template/default/src/templates/*'],
-	    },
+    package_data = { '':['*.*']},
     author = "Daniel Gray",
     author_email = "dan@technigami.com",
     description = "A package to help automate creation of new django apps and projects",
