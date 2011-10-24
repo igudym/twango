@@ -1,0 +1,19 @@
+* Twango
+An open source set of extensions to make setting up new django projects go more smoothly
+while still retaining the flexability of the django framework.  It just provides a set of 
+templates that allow you to really dive in and get started on the main project rather than
+repeat the tasks you often need to perform setting up a new django project.
+
+* Installation
+It is recommended that you install twango globally ::
+    : sudo pip install https://github.com/dagray/twango/tarball/master
+
+* Usage
+   Starting a new twango project:
+    : twango-admin.py startproject myproject
+
+This will give you a new project based on the default twango template.  The system is currently only designed for one template, but in the near future we won't provide more templates, but will provide a place for you to take an application skelaton you like and bake it into a twango project template 
+
+There is now a management command "initapp" - this builds out a new initial app, while at the same time adding the correct values to the urls and app settings, so it will just work once you run that command
+
+

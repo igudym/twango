@@ -1,5 +1,9 @@
 env
 *migrations*
+build/*
+dist/*
+twango.egg-info/*
+
 *.pyc
 *.swp
 *.db

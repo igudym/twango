@@ -23,4 +23,4 @@ if settings.SERVE_STATIC == True :
            (baseurlregex, 'django.views.static.serve',
             {'document_root':  settings.MEDIA_ROOT,'show_indexes': True}),
     )
-urlpatterns = urlpatterns + patterns('',(url(r'^patterncheck/',include('src.apps.patterncheck.urls'))),) 
+

@@ -8,6 +8,7 @@ setup(
 	        # If any package contains *.txt or *.rst files, include them:
 	        '': ['*.sh','*.txt', '*.html','*.js','*.css','*.png','*.jpg','*.pdf'],
 			'twango/template/default/src/media':['*'],
+			'twango/template/default/src/settings':['*'],
 			'twango/template/default/src/templates':['*'],
 	    },
     author = "Daniel Gray",
