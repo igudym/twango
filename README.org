@@ -1,3 +1,6 @@
+* Known issues
+I started out with setuptools, and for some reason setup.py isn't copying over the static directories that aren't packages media/ and settings/
+
 * Twango
 An open source set of extensions to make setting up new django projects go more smoothly
 while still retaining the flexability of the django framework.  It just provides a set of 
