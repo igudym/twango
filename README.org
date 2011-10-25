@@ -19,7 +19,7 @@ It is recommended that you install twango globally ::
    Starting a new twango project:
     : twango-admin.py startproject myproject
 
-This will give you a new project based on the default twango template.  The system is currently only designed for one template, but in the near future we won't provide more templates, but will provide a place for you to take an application skelaton you like and bake it into a twango project template 
+This will give you a new project based on the default twango template.  The system is currently only designed for one template, but in the near future we won't provide more templates, but will provide a place for you to take an application skeleton you like and bake it into a twango project template 
 
 The twango default template provides you with a virtualenvironment.  To set it up and get everything working on your local machine
 go to the directory (myproject) and run the bootstrap script
