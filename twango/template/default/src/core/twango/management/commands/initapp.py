@@ -86,7 +86,11 @@ def update_configuration(package,app_name):
     f = open(settings.PROJECT_DIR+"/urls.py","a")
     f.write("urlpatterns = urlpatterns + patterns('',(url(r'^"+app_name+"/'"+",include('src.apps"+".".join(package)+"."+app_name+".urls'))),) \n")
     f.close()
-    f = open(settings.PROJECT_DIR+"/settings/25-added_apps.py","a")
+    try: 
+        f = open(settings.PROJECT_DIR+"/settings/25-added_apps.py","a")
+    except:
+        f = open(settings.PROJECT_DIR+"/settings/25-added_apps.py","w")
+        
     f.write("""
 INSTALLED_APPS += (
     'apps"""+".".join(package)+"."+app_name+"""',
