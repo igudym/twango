@@ -1,1 +1,99 @@
-<h1> New App </h1>
+{% extends "base.html" %}
+{% block extrahead %}
+
+<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<style>
+/* Color Scheme:
+
+	FFAE00
+	FFC340
+	FFD373
+	A67100
+	
+*/
+	body {
+		margin-left:0px;
+		margin-top:0px;
+	}
+	#branding h1, #branding h1 a {
+		font-family: 'Architects Daughter', cursive;
+		text-decoration:none;
+		font-size:70px;
+		color:#A67100;
+		background:#FFD373;
+		width:100%;
+		margin:0px;
+		padding:15px;
+	}
+	header h1 {
+		color:#A67100;
+	}
+	.layout-grid header h1 {
+		margin-left:15px;
+	}
+	header p {
+		margin-left:30px;
+	}
+	
+	.select_block {
+		float:left;
+		width:190px;
+		height:190px;
+		background:#FFC340;
+		margin:15px;
+	}
+	hr.space {
+		
+		clear:both;
+		width:100%;
+	}
+	footer {
+		margin-left:15px;
+	}
+	p {
+		color:#c55;
+		margin-right:15px;
+	}
+	
+</style>
+{% endblock %}
+{% block title %} Twango Configuraiton {% endblock %}
+{% block body %}
+	<header id="branding">
+		<h1><a href="/">Twango</a></h1>
+		<p>
+			This is the twango setup screen.  This is the dashboard you get
+			when first creating a twango project.  Similar screens will be generated
+			for new apps as well.  Once you have completed the steps on this page,
+			you can get back to it by going to /twango/conf/ if you have sufficient privileges
+			
+		</p>
+	</header>
+	<div class="full layout-grid">
+		<header class="column width4">
+			<h1>1. Select a wireframe preset</h1>
+			<p> Set up the base template that will be extended for all your child templates.  Just pick how many columns / what general areas you want present on the main page.  If one doesn't exist, just edit your own base.html file. <!-- @todo: write a dynamic template generator --> </p>
+			<hr>
+		</header>
+		
+		<div class="select_block"> &nbsp; </div>
+		<div class="select_block"> &nbsp; </div>
+		<div class="select_block"> &nbsp; </div>
+		<div class="select_block"> &nbsp; </div>
+		<div class="select_block"> &nbsp; </div>
+		
+		<hr class="space" />
+		<header class="column width4">
+			<h1>2.  Start your first app </h1>
+		<p>	from the command line run "python manage.py initapp (appname)"</p>
+		</header>
+	</div>
+	
+{% endblock %}
+
+{% block footer %}
+<footer class="full">
+	<hr>
+	<p><small>Design &copy; 2011 Technigami, <a href="http://www.technigami.com" target="_blank">technigami.com</a>.  Licensed under the GPL license</p>
+</footer>
+{% endblock %}
