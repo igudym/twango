@@ -83,18 +83,34 @@ def update_configuration(package,app_name):
     """
     This takes in a template settings file, and generates a new settings file from that template
     """
+    # update url root url patterns
     f = open(settings.PROJECT_DIR+"/urls.py","a")
-    f.write("urlpatterns = urlpatterns + patterns('',(url(r'^"+app_name+"/'"+",include('src.apps"+".".join(package)+"."+app_name+".urls'))),) \n")
+    f.write("urlpatterns = urlpatterns + patterns('',(url(r'^"+app_name.replace(".","/")+"/'"+",include('src.apps"+".".join(package)+"."+app_name+".urls'))),) \n")
     f.close()
+
+    # Update the generated installed apps settings
     try: 
-        f = open(settings.PROJECT_DIR+"/conf/25-added_apps.py","a")
+        f = open(settings.PROJECT_DIR+"/conf/g_added_apps.py","a")
     except:
-        f = open(settings.PROJECT_DIR+"/conf/25-added_apps.py","w")
-        
+        f = open(settings.PROJECT_DIR+"/conf/g_added_apps.py","w")
+     
     f.write("""
 INSTALLED_APPS += (
     'apps"""+".".join(package)+"."+app_name+"""',
     ) \n""")
+    
+    f.close()
+    
+    # Perform regexp replacements in the contents of 
+    # the generated urls.py file
+
+    f = open(settings.PROJECT_DIR+'/apps/'+"/".join(package)+"/"+app_name+"/urls.py",'r')
+    contents = f.read()
+    contents = contents.replace("{{app_views_path}}","apps"+".".join(package)+"."+app_name+'.views')
+    f.close()
+    f = open(settings.PROJECT_DIR+'/apps/'+"/".join(package)+"/"+app_name+"/urls.py",'w')
+    f.write(contents)
+    f.close()
 
 class Command(LabelCommand):
     help = "Creates a Django app directory structure for the given app name in the current directory."

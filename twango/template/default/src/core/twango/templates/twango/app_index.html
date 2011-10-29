@@ -54,34 +54,28 @@
 		color:#c55;
 		margin-right:15px;
 	}
-	
+	ul.installed_apps li {
+		color:#c55;
+		font-size:22px;
+	}
 </style>
 {% endblock %}
 {% block title %} Twango Configuraiton {% endblock %}
 {% block body %}
 	<header id="branding">
-		<h1><a href="/">Twango; New App</a></h1>
+		<h1><a href="/">New App Configuration</a></h1>
 		<p>
 			Set up your new twango app here.
+			<ul>
+				<li> Models </li>
+				<li> Views </li>
+				<li> Templates </li>
+			</ul>
+
 		</p>
 	</header>
 	<div class="full layout-grid">
 		<header class="column width4">
-			<h1>1. Select a wireframe preset</h1>
-			<p> Set up the base template that will be extended for all your child templates.  Just pick how many columns / what general areas you want present on the main page.  If one doesn't exist, just edit your own base.html file. <!-- @todo: write a dynamic template generator --> </p>
-			<hr>
-		</header>
-		
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		
-		<hr class="space" />
-		<header class="column width4">
-			<h1>2.  Start your first app </h1>
-		<p>	from the command line run "python manage.py initapp (appname)"</p>
 		</header>
 	</div>
 	

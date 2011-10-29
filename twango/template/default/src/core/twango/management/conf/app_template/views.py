@@ -7,4 +7,4 @@ def index(request):
     and createa folder named (yourappname) in the templates directory.
     """    
 
-    return render_to_response('index.html')
+    return render_to_response('twango/app_index.html')

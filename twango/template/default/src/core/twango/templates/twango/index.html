@@ -54,19 +54,18 @@
 		color:#c55;
 		margin-right:15px;
 	}
-	
+	ul.installed_apps li {
+		color:#c55;
+		font-size:22px;
+	}
 </style>
 {% endblock %}
 {% block title %} Twango Configuraiton {% endblock %}
 {% block body %}
 	<header id="branding">
-		<h1><a href="/">Twango</a></h1>
+		<h1><a href="/">Twango; Dashboard</a></h1>
 		<p>
-			This is the twango setup screen.  This is the dashboard you get
-			when first creating a twango project.  Similar screens will be generated
-			for new apps as well.  Once you have completed the steps on this page,
-			you can get back to it by going to /twango/conf/ if you have sufficient privileges
-			
+			Set up your new twango app here.
 		</p>
 	</header>
 	<div class="full layout-grid">
@@ -75,6 +74,7 @@
 			<p> Set up the base template that will be extended for all your child templates.  Just pick how many columns / what general areas you want present on the main page.  If one doesn't exist, just edit your own base.html file. <!-- @todo: write a dynamic template generator --> </p>
 			<hr>
 		</header>
+		
 		<div class="select_block"> &nbsp; </div>
 		<div class="select_block"> &nbsp; </div>
 		<div class="select_block"> &nbsp; </div>
@@ -83,8 +83,24 @@
 		
 		<hr class="space" />
 		<header class="column width4">
-			<h1>2.  Start your first app </h1>
-		<p>	from the command line run "python manage.py initapp (appname)"</p>
+			<h1> Your Apps </h1>
+			<ul class="installed_apps">
+				{% for installed_app in installed_apps %}
+					<li><a href = "/{{installed_app}}/">{{installed_app}}</a></li>
+				{% endfor %}
+			</ul>
+			<h1> Third Party Apps </h1>
+			
+			
+			<h1> Start Another App </h1>
+			<form action="/" method="post">
+				
+				<p><b>Application Name </b><input type="text" name="appname" />
+				<input type="submit" name="submit" value="create">
+				</p>
+				
+			</form>
+		<p> or, from the command line run "python manage.py initapp (appname)"</p>
 		</header>
 	</div>
 	
