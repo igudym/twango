@@ -1,2 +1,3 @@
 django
 django-wysiwyg
+django-reversion
