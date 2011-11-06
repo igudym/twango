@@ -1,86 +1,11 @@
-{% extends "base.html" %}
-{% block extrahead %}
+{% extends "twango/base.html" %}
 
-<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-<style>
-/* Color Scheme:
-
-	FFAE00
-	FFC340
-	FFD373
-	A67100
-	
-*/
-	body {
-		margin-left:0px;
-		margin-top:0px;
-	}
-	#branding h1, #branding h1 a {
-		font-family: 'Architects Daughter', cursive;
-		text-decoration:none;
-		font-size:70px;
-		color:#A67100;
-		background:#FFD373;
-		width:100%;
-		margin:0px;
-		padding:15px;
-	}
-	header h1 {
-		color:#A67100;
-	}
-	.layout-grid header h1 {
-		margin-left:15px;
-	}
-	header p {
-		margin-left:30px;
-	}
-	
-	.select_block {
-		float:left;
-		width:190px;
-		height:190px;
-		background:#FFC340;
-		margin:15px;
-	}
-	hr.space {
-		
-		clear:both;
-		width:100%;
-	}
-	footer {
-		margin-left:15px;
-	}
-	p {
-		color:#c55;
-		margin-right:15px;
-	}
-	ul.installed_apps li {
-		color:#c55;
-		font-size:22px;
-	}
-</style>
-{% endblock %}
 {% block title %} Twango Configuraiton {% endblock %}
+
 {% block body %}
-	<header id="branding">
-		<h1><a href="/">Twango; Dashboard</a></h1>
-		<p>
-			Set up your new twango app here.
-		</p>
-	</header>
+	
 	<div class="full layout-grid">
 		<header class="column width4">
-			<h1>1. Select a wireframe preset</h1>
-			<p> Set up the base template that will be extended for all your child templates.  Just pick how many columns / what general areas you want present on the main page.  If one doesn't exist, just edit your own base.html file. <!-- @todo: write a dynamic template generator --> </p>
-			<hr>
-		</header>
-		
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		<div class="select_block"> &nbsp; </div>
-		
 		<hr class="space" />
 		<header class="column width4">
 			<h1> Your Apps </h1>

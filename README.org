@@ -24,6 +24,8 @@ go to the directory (myproject) and run the bootstrap script
 
 There is now a management command "initapp" - this builds out a new initial app, while at the same time adding the correct values to the urls and app settings, so it will just work once you run that command
 
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">twango</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="twangoproject.com" property="cc:attributionName" rel="cc:attributionURL">Technigami</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://technigami.com" rel="cc:morePermissions">http://technigami.com</a>.
+
 * Trivia
 We picked the name "Twango" not because of any connection with twitter, but because we like the play on words.
 "Twango", a track on Duane Eddy's album Road Trip, is a tribute to Reinhardt. ( http://en.wikipedia.org/wiki/Django_Reinhardt )

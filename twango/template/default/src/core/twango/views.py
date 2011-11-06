@@ -9,6 +9,8 @@ def index(request):
 	
 	installed_apps = INSTALLED_APPS
 	iap = ()
+	
+	#List the set of installed apps
 	for installed_app in installed_apps:
 		 iap += (installed_app.split('.')[-1],) #remove the app package info
 	

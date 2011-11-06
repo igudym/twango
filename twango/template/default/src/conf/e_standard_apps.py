@@ -12,14 +12,11 @@ INSTALLED_APPS = (
 
 INSTALLED_APPS += (
     'core.twango',
-	
 )
-
 
 INSTALLED_APPS += (
     'reversion',
     'django_wysiwyg',
-
 ) 
 
 
