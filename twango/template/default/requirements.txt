@@ -4,4 +4,3 @@ django-reversion==1.5.1
 django-wysiwyg==0.3.0
 docutils==0.8.1
 wsgiref==0.1.2
-django-grappelli==2.3.5

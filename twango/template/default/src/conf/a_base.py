@@ -82,4 +82,3 @@ TEMPLATE_DIRS = (
     PROJECT_DIR+'/templates/'
 )
 SERVE_STATIC = True
-ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
