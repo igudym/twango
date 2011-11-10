@@ -1,0 +1,88 @@
+{% extends "twango/base.html" %}
+{% block extrahead %}
+<style>
+
+	section {
+		opacity:0.7;
+		background:#55f;
+		margin-bottom:18px;
+		min-height:26px;
+	}
+	section .width1, section .width2, section .width3, section .width4 {
+		background:#aaf;
+		text-align:center;
+		margin-bottom:18px;
+		min-height:26px;
+	}
+
+	section:hover {
+		background:#11f;
+	}
+	#submit {
+		border:none;
+		background:#fff;
+		color:#f11;
+		font-size:22px;
+	}
+	#add_block {
+		border:none; background:#fff; color:#f11;
+		margin-bottom:6px;
+	}
+	form {
+		float:left;
+	}
+	.block-tools {
+		opacity:1 !important;
+		position:absolute;
+		right:0;
+	}
+</style>
+
+<script type="text/javascript" src="/media/scripts/jquery-ui.custom.min.js"></script>
+<script>
+	$(function() {
+		$( "section" ).sortable({
+			items: 'div.column',
+			stop:function(event, ui) {
+				ui.item.parent().children().removeClass('first');
+				ui.item.parent().children()[0].className = 'first '+ ui.item.parent().children()[0].className;
+			
+			}
+		});
+	});
+</script>
+{% endblock %}
+{% block body %}
+<h1> Grid Designer (960px wide) </h1>
+	
+	<p> Set up the base template that will be extended for all your child templates.  Just pick how many columns, and name blocks.
+	[[ save ]]
+	<form action="/grid_designer/" method="post">{% csrf_token %}<input  id="submit" type="submit" name="add_row" value="Add Row" /></form>
+	<hr>
+</header>
+<div class="full layout-grid grid-designer">
+{% for section in sections %}
+	<section class="width4" id="{section.id}}">
+		{% for block in section.blocks.all %}
+			<div class="{% if forloop.first %}first {% endif %}column width{{block.width}}">{{block.title}}
+			</div>
+			
+		{% endfor %}
+		<div id="{{section.id}}-tools" class="block-tools">
+			<form action="/grid_designer/" method="post">{% csrf_token %}
+				<input type="hidden" name="section" value="{{section.id}}">
+				<input type="submit"  name="add_block" value="1" id="add_block" /> &nbsp;
+				<input type="submit"  name="add_block" value="2" id="add_block" /> &nbsp;
+				<input type="submit"  name="add_block" value="3" id="add_block" /> &nbsp;
+				<input type="submit"  name="add_block" value="4" id="add_block" /> &nbsp;
+				 <br /> 
+				<input type="submit"  name="add_block" value="remove_section" id="add_block" />
+			</form>
+		</div>
+	</section>
+
+	
+{% endfor %}
+</div>
+
+{% endblock %}

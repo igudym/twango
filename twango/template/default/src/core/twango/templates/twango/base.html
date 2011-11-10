@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
+<head>
+<title>{% block title %}{% endblock %}</title>
+<!-- keep them uncompressed for development, then add a caching compressor -->
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.reset.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.base.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.type.css">
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.table.css">
+
+<link type="text/css" rel="stylesheet" media="screen" href="/media/css/uncompressed/baseline.grid.css">
+{% block meta %}{% endblock %}
+<script type="text/javascript" src="/media/scripts/html5.js"></script>
+<script type="text/javascript" src="/media/scripts/jquery.min.js"></script>
+	<style>
+		#page					{ margin: 0 auto 36px auto; }
+		.layout-grid			{ background-image: url(/media/img/baseline+column.png); background-repeat: repeat; background-position: 0 1px; border-bottom: solid 1px #CEECF5; }
+		#branding a				{ border: none; }
+		.grid-example			{ background: rgba(187, 204, 221, 0.3); color: #069; }
+		.grid-example.unitx1, .grid-example.unitx2,
+		.grid-example.unitx3, .grid-example.unitx4,
+		.grid-example.unitx5, .grid-example.unitx6,
+		.grid-example.unitx7	{ margin-bottom: 18px; }
+		@media only screen and (max-device-width:480px) {
+			.layout-grid		{ background-image: url(/media/img/baseline.png); }
+			.grid-example		{ background: rgba(187, 204, 221, 0.6); }
+		}
+	</style>
+
+
+	<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+	
+	<style>
+	/* Color Scheme:
+
+		FFAE00
+		FFC340
+		FFD373
+		A67100
+
+	*/
+		body {
+			margin-left:15px; margin-right:45px;
+			margin-top:0px;
+			
+		}
+		form {
+			overflow:hidden;
+		}
+		#branding h1, #branding h1 a {
+			font-family: 'Architects Daughter', cursive;
+			text-decoration:none;
+			font-size:40px;
+			color:#A67100;
+			
+			width:100%;
+			margin:0px;
+		
+		}
+		h1,h2,h3 {
+			font-family: 'Architects Daughter', cursive;
+			color:#A67100;
+		}
+		#branding h1 {
+			background:#FFD373;
+			padding:15px;
+
+		}
+		.layout-grid header h1 {
+			margin-left:15px;
+		}
+		header p {
+			margin-left:30px;
+		}
+
+		.select_block {
+			float:left;
+			width:190px;
+			height:190px;
+			background:#FFC340;
+			margin:15px;
+		}
+		hr.space {
+
+			clear:both;
+			width:100%;
+		}
+		footer {
+			margin-left:15px;
+		}
+		p {
+			color:#c55;
+			margin-right:15px;
+		}
+		ul.installed_apps li {
+			color:#c55;
+			font-size:22px;
+		}
+	</style>
+		{% block extrahead %}
+	{% endblock %}
+
+</head>
+
+<body class="page-grid">
+	<div id="page">
+		{% block branding %}
+		<header id="branding">
+			<h1><a href="/">Twango; Dashboard</a></h1>
+			<p>
+
+			</p>
+		</header>
+		{% endblock %}
+		{% block body %}{% endblock%}
+	</div>
+	{% block footer %}{% endblock %}
+	{% block extrafooter %}{% endblock %}
+</body>
+</html>

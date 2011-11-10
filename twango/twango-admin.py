@@ -11,8 +11,12 @@ cli_strings['options'] = """
 
 cli_strings['intro'] = """
     ***************************
-    *   twango admin          *
+    *   Twango Project        *
     ***************************
+
+    running this command sets up a new project with some defaults
+    that we have found helpful as a starting point
+
 """
 
 
