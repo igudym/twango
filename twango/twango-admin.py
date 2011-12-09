@@ -1,7 +1,11 @@
 #!/usr/bin/python
 from os import sys
 
-from twango.management.templates import *
+try:
+    from twango.management.templates import *
+except ImportError:
+    from management.templates import *
+
 cli_strings = {}
 
 cli_strings['options'] = """
