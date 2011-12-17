@@ -9,7 +9,7 @@ except ImportError:
 cli_strings = {}
 
 cli_strings['options'] = """
-   usage: twango-admin.py startproject (path to project) -- (extra options)
+   usage: twango-admin.py [startproject] [deploy] (path to project) -- (extra options)
 
 """
 
@@ -26,15 +26,21 @@ cli_strings['intro'] = """
 
 def main(args):
         
-        if len(args) < 3:
-                print cli_strings['intro']
-                print cli_strings['options']
-                return
+    if len(args) < 3:
+        print cli_strings['intro']
+        print cli_strings['options']
+        return
 
-        if sys.argv[1] == 'startproject':
-                print cli_strings['intro']
-                startproject(sys.argv[2])
+    if sys.argv[1] == 'startproject':
+        print cli_strings['intro']
+        startproject(sys.argv[2])
+    elif sys.argv[1] == 'deploy':
+        try:
+            from twango.deploy.deploy import deploy
+        except ImportError:
+            from deploy.deploy import deploy
+    deploy()
 
 if __name__ == "__main__":
-        main(sys.argv)
+    main(sys.argv)
 
