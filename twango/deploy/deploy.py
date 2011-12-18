@@ -74,9 +74,6 @@ def process_modules(node, modules):
 def process_render(node, conf):
     if VERBOSE:
         print "Render: ", node, conf
-#    path = os.path.abspath(os.path.join(pth.dirname(__file__), "templates"))
-#    jinja = Environment(loader=FileSystemLoader(path))
-#    template = env.get_template(conf['template'])
     create_dir(node, os.path.dirname(conf['destination']))
     upload_template(conf['template'], conf['destination'], context={'name': 'John Doe'}, 
         use_jinja=True, template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "templates")),
