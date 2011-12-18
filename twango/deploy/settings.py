@@ -41,7 +41,7 @@ SERVICES = {
 PROJECTS = {
     'myp': {
         'source': 'src',
-        'destination': '/home/myp',
+        'destination': '/home/web/myp',
         'user': 'web',
         'group': 'web',
     }

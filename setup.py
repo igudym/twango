@@ -9,5 +9,6 @@ setup(
     author_email = "dan@technigami.com",
     description = "A package to help automate creation of new django apps and projects",
     url = "",
-    include_package_data = True
+    include_package_data = True,
+    install_requires=['jinja2'],
 )
