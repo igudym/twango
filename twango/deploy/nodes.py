@@ -1,6 +1,6 @@
 NODES = {
     'twango-example.com': {
-        'ip': '50.56.217.34',
+        'host': '50.56.242.176',
         'user': 'root',
         'sudo': False,
     }

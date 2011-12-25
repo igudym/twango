@@ -81,7 +81,8 @@ def process_render(node, conf):
     
 
 def process_entity(node, entity, defs):
-    print node, entity, defs
+    if VERBOSE:
+        print node, entity, defs
     for key, value in defs.iteritems():
         if key == 'roles':
             if entity != 'NODEDEF':
@@ -120,9 +121,9 @@ def deploy(path):
         if not settings.NODES.has_key(node):
             if settings.OPTIONS['provision'] is not None:
                 provision(node)
-        env.host_string = '@'.join([settings.NODES[node]['user'], settings.NODES[node]['ip']])
+        env.host_string = '@'.join([settings.NODES[node]['user'], settings.NODES[node]['host']])
         env.port = 22
         env.user = settings.NODES[node]['user']
-        env.host = settings.NODES[node]['ip']
+        env.host = settings.NODES[node]['host']
         deploy_node(node, defs)
 
