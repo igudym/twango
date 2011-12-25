@@ -1,123 +1,154 @@
-from config import settings
+import sys, os
 from fabric.api import run, put, env
-from fabric.network import disconnect_all
 from fabric.context_managers import settings as fabset
+from fabric.context_managers import cd
 from fabric.contrib.project import rsync_project
-from fabric.contrib.files import upload_template
-import os
+from fabric.contrib.files import exists, upload_template
+from twango.deploy.config import settings
+import imp
 
 VERBOSE = True
 
-class KeywordError(Exception):
-    def __init__(self, value):
-        self.value = value
-    def __str__(self):
-        return repr(self.value)
+def item(func):
+    "Decorator for define property and verbosity"
+    def wrapper(*args, **kwds):
+        if VERBOSE:
+            print ": ".join([args[0].__class__.__name__, func.__name__])
+        return func(*args, **kwds)
+    return property(wrapper)
+
+def itemp(func):
+    "Decorator for verbosity"
+    def wrapper(*args, **kwds):
+        if VERBOSE:
+            print ": ".join([args[0].__class__.__name__, func.__name__]), args[1:], kwds
+        return func(*args, **kwds)
+    return wrapper
 
 def provision(node):
     if VERBOSE:
         print 'Provision: ', node
-    cmd = prefix(node) + ('apt-get update ; apt-get -y -q upgrade' if env.host_type == 'deb' else 'yum -y update')
+    cmd = env.facts.sudo + ('apt-get update ; apt-get -y -q upgrade' if env.facts.packager == 'deb' else 'yum -y update')
     run(cmd)
 
-def process_packages(node, packages):
-    if VERBOSE:
-        print "Install packages: ", node, packages
-    cmd = prefix(node) + ('apt-get -y -q install ' if env.host_type == 'deb' else 'yum -y install ')
-    params = packages if type(packages) == str else ' '.join(packages)
-    run(cmd + params)
+class Facts(object):
 
-def prefix(node):
-    return 'sudo ' if settings.NODES[node]['sudo'] else ''
+    def __init__(self):
+        self._packager = None
+        self._sudo = None
 
-def create_user(node, user):
-    if VERBOSE:
-        print "Creating user: ", node, user
-    if user:
-        with fabset(warn_only=True):
-            run(prefix(node) + 'useradd ' + user)
-
-def create_group(node, group):
-    if VERBOSE:
-        print "Creating group: ", node, group
-    if group:
-        with fabset(warn_only=True):
-            run(prefix(node) + 'groupadd ' + group)
-
-def create_dir(node, path):
-    run(prefix(node) + 'mkdir -p ' + path)
-
-def process_project(node, proj):
-    if VERBOSE:
-        print "Project: ", node, proj
-    project = settings.PROJECTS[proj]
-    user = project['user']
-    create_user(node, user)
-    group = project['group']
-    create_group(node, group)
-    src = project['source']
-    if not src:
-        raise KeywordError('"source" attribute required')
-    dst = project['destination']
-    if not dst:
-        raise KeywordError('"destination" attribute required')
-    create_dir(node, dst)
-    rsync_project(local_dir=src, remote_dir=dst)
-    run(prefix(node) + ('chown -R %s:%s %s' % (user, group, dst)))
+    @property
+    def packager(self):
+        if self._packager is None:
+            with fabset(warn_only=True):
+                result = run('rpm -v')
+            self._packager = 'deb' if result.failed else 'rpm'
+        return self._packager
     
+    @property
+    def sudo(self):
+        if self._sudo is None:
+            self._sudo = ''
+        return self._sudo
 
-def process_modules(node, modules):
-    if VERBOSE:
-        print "Modules: ", node, modules
-    run('pip install ' + ' '.join(modules))
-
-def process_render(node, conf):
-    if VERBOSE:
-        print "Render: ", node, conf
-    create_dir(node, os.path.dirname(conf['destination']))
-    upload_template(conf['template'], conf['destination'], context={'name': 'John Doe'}, 
-        use_jinja=True, template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "templates")),
-        use_sudo = settings.NODES[node]['sudo'])
+env.facts = Facts()
     
+class Action(object):
 
-def process_entity(node, entity, defs):
-    if VERBOSE:
-        print node, entity, defs
-    for key, value in defs.iteritems():
-        if key == 'roles':
-            if entity != 'NODEDEF':
-                raise KeywordError(key)
-            for role in value:
-                process_entity(node, 'ROLE', settings.ROLES[role])
-        elif key == 'packages':
-            process_packages(node, value)
-        elif key == 'services':
-            for service in value:
-                process_entity(node, 'SERVICE', settings.SERVICES[service])
-        elif key == 'projects':
-            for project in value:
-                process_project(node, project)
-        elif key == 'modules':
-            process_modules(node, value)
-        elif key == 'render':
-            for conf in value:
-                process_render(node, conf)
-        else:
-            raise KeywordError(key)
-            
-def set_host_type():
-    with fabset(warn_only=True):
-        result = run('rpm -v')
-    env.host_type = 'deb' if result.failed else 'rpm'
+    @itemp
+    def create_user(self, user):
+        if user:
+            with fabset(warn_only=True):
+                run(env.facts.sudo + 'useradd ' + user)
+    @itemp
+    def create_group(self, group):
+        if group:
+            with fabset(warn_only=True):
+                run(env.facts.sudo + 'groupadd ' + group)
 
-def deploy_node(node, defs):
-    set_host_type()
-    process_packages(node, ['python-pip', 'rsync']) # need for 'module' and 'project' handlers
-    process_entity(node, 'NODEDEF', defs)
+    @itemp
+    def create_dir(self, path):
+        run(env.facts.sudo + 'mkdir -p ' + path)
 
-def deploy(path):
-    settings.load(os.path.join(path, 'settings.py'), os.path.join(path, 'nodes.py'))
-    for node,defs in settings.NODEDEFS.iteritems():
+    @itemp
+    def render(self, template, destination, context={}):
+        action.create_dir(os.path.dirname(destination))
+        path = os.path.join(os.path.dirname(sys.modules['twango'].__file__), 'deploy', 'templates')
+        upload_template(template, destination, context, use_jinja=True,
+            template_dir = path, use_sudo = env.facts.sudo)
+
+action = Action()
+
+class Package(object):
+
+    @itemp
+    def install(self, *packages):
+        cmd = ('apt-get -y -q install ' if env.facts.packager == 'deb' else 'yum -y install ')
+        params = packages if type(packages) == str else ' '.join(packages)
+        run(env.facts.sudo + cmd + params)
+
+package = Package()
+
+class Module(object):
+
+    @itemp
+    def install(self, *modules):
+        run('pip install ' + ' '.join(modules))
+
+module = Module()
+
+class Service(object):
+
+    @item
+    def nginx(self):
+        package.install('nginx', 'libpcre3', 'libpcre3-dev', 'libssl-dev')
+        version = '1.0.11'
+        if not exists('nginx-%s.tar.gz' % version, env.facts.sudo):
+            run('wget -c http://nginx.org/download/nginx-%s.tar.gz' % version)
+            run('tar -xzf nginx-%s.tar.gz' % version)
+        if not exists('nginx-%s' % version + '/Makefile'):
+            with cd('nginx-%s' % version):
+                run('''./configure --conf-path=/etc/nginx/nginx.conf \
+                    --error-log-path=/var/log/nginx/error.log \
+                    --pid-path=/var/run/nginx.pid \
+                    --lock-path=/var/lock/nginx.lock \
+                    --http-log-path=/var/log/nginx/access.log \
+                    --http-client-body-temp-path=/var/lib/nginx/body \
+                    --http-proxy-temp-path=/var/lib/nginx/proxy \
+                    --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+                    --with-http_stub_status_module \
+                    --with-http_flv_module \
+                    --with-http_ssl_module \
+                    --sbin-path=/usr/sbin \
+                ''')
+                run('make')
+                run(env.facts.sudo + 'make install')
+
+    @item
+    def uwsgi(self):
+        package.install('python-dev', 'libxml2-dev')
+        module.install('uwsgi')
+        action.render('uwsgi.conf', '/etc/init/uwsgi.conf')
+        with fabset(warn_only=True):
+            run(env.facts.sudo + 'service uwsgi start')
+
+service = Service()
+
+class defProject(object):
+    def deploy(self, source=None, destination=None, user=None, group=None):
+        action.create_user(user)
+        action.create_group(group)
+        if not source:
+            raise KeywordError('"source" attribute required')
+        if not destination:
+            raise KeywordError('"destination" attribute required')
+        action.create_dir(destination)
+        rsync_project(local_dir=source, remote_dir=destination)
+        run(env.facts.sudo + ('chown -R %s:%s %s' % (user, group, destination)))
+
+
+def deploy_nodes(nodelist):
+    for node, roles in nodelist.iteritems():
         if not settings.NODES.has_key(node):
             if settings.OPTIONS['provision'] is not None:
                 provision(node)
@@ -125,5 +156,16 @@ def deploy(path):
         env.port = 22
         env.user = settings.NODES[node]['user']
         env.host = settings.NODES[node]['host']
-        deploy_node(node, defs)
+        env.facts = Facts()
+        for role in roles:
+            role()
+
+def deploy(path):
+    settings.load(os.path.join(path, 'settings.py'), os.path.join(path, 'nodes.py'))
+    mod = imp.load_source('init', os.path.join(path, 'init.py'))
+    thismodule = sys.modules[__name__]
+    for symbol in dir(mod):
+        setattr(thismodule, symbol, getattr(mod, symbol))
+    env.settings = settings
+    deploy_nodes(nodes)
 
