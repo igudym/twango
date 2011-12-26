@@ -35,12 +35,11 @@ def main(args):
         print cli_strings['intro']
         startproject(sys.argv[2])
     elif sys.argv[1] == 'deploy':
-        from twango.deploy.deploy import deploy
         try:
-            from twango.deploy.deploy import deploy
+            from twango.deploy.deploylib import deploy
         except ImportError:
-            from deploy.deploy import deploy
-    deploy(sys.argv[2])
+            from deploy.deploylib import deploy
+        deploy(sys.argv[2])
 
 if __name__ == "__main__":
     main(sys.argv)

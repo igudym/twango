@@ -18,10 +18,10 @@ class Config:
 
     def load(self, config=None, hosts=None):
         try:
-            c = config if config else 'settings.py'
+            c = config if config else 'options.py'
             mod = self._loadfile(c)
         except ImportError, e:
-            raise ImportError("Could not import settings '%s': %s" % (c, e))
+            raise ImportError("Could not import options '%s': %s" % (c, e))
 
         for setting in dir(mod):
             if setting == setting.upper():

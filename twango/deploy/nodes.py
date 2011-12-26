@@ -5,4 +5,3 @@ NODES = {
         'sudo': False,
     }
 }
-
